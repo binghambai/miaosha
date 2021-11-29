@@ -29,6 +29,7 @@
     <modules>
         <module>mall-goods</module>
         <module>mall-trade</module>
+        <module>mall-open</module>
     </modules>
 
     <properties>
