@@ -4,16 +4,19 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.id.UUIDGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.UUID;
 
 @Entity
 @Table(name = "mall_user")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class MallUser {
+public class MallUser implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -23,7 +26,7 @@ public class MallUser {
     private String userName;
 
     @Column(name = "user_id")
-    private String userId;
+    private String userId = UUID.randomUUID().toString().replaceAll("-", "");
 
     @Column(name = "user_password")
     private String userPassword;
@@ -32,7 +35,7 @@ public class MallUser {
     private String userPhone;
 
     @Column(name = "user_pic")
-    private String userPic;
+    private String userPic = "";
 
     public String getUserPic() {
         return userPic;

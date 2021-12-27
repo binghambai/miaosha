@@ -7,6 +7,7 @@ import com.binghambai.mallopen.response.UserInfoVo;
 import com.mall.common.provider.response.BaseResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(name = "mall-customer")
 public interface CustomerInfoProvider {
@@ -18,5 +19,5 @@ public interface CustomerInfoProvider {
     BaseResponse<LoginResponse> login(Login login);
 
     @RequestMapping("/customer/get-user-info")
-    BaseResponse<UserInfoVo> getUserInfoByPhone(String phone);
+    BaseResponse<UserInfoVo> getUserInfoByPhone(@RequestParam("phone") String phone);
 }

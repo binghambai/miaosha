@@ -24,10 +24,11 @@ public class CustomerInfoService {
 
     @Transactional
     public BaseResponse createCustomer(Customer customer) {
-        MallUser mallUser = MallUser.builder().userName(customer.getCustomerName())
-                .userPassword(customer.getCustomerPassword())
-                .userPhone(customer.getCustomerPhone())
-                .build();
+        MallUser mallUser = new MallUser();
+        mallUser.setUserName(customer.getCustomerName());
+        mallUser.setUserPassword(customer.getCustomerPassword());
+        mallUser.setUserPhone(customer.getCustomerPhone());
+
         boolean exists = customerRepository.existsByUserPhone(customer.getCustomerPhone());
         if (exists) {
             return BaseResponse.info(ErrorCode.SUCCESS, "已经存在");

@@ -20,6 +20,7 @@
         <module>mall-goods</module>
         <module>mall-common</module>
         <module>mall-open</module>
+        <module>mall-customer</module>
     </modules>
 
     <properties>

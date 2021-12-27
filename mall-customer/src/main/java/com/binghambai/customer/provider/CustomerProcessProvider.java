@@ -21,5 +21,5 @@ public interface CustomerProcessProvider {
     BaseResponse login(@RequestBody @Valid CustomerLogin customerLogin);
 
     @GetMapping("/customer/get-user-info")
-    BaseResponse getUserInfoByPhone(@RequestParam("phone") String phone);
+    BaseResponse getUserInfoByPhone(String phone);
 }

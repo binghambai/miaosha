@@ -14,7 +14,7 @@ public class LoginResponse implements Serializable {
 
     private String userName;
 
-    private String userPic = "";
+    private String userPic;
 
     private String userPhone;
 

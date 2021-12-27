@@ -7,6 +7,7 @@ import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.binghambai.mallopen.response.LoginResponse;
 import com.mall.common.provider.Exception.SbcException;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -66,8 +67,11 @@ public class JwtUtils {
                 return null;
             }
             LoginResponse loginResponse = new LoginResponse();
-            loginResponse.setUserName(claims.get("username").toString());
-            loginResponse.setUserPhone(claims.get("phone").toString());
+            String username = claims.get("username").toString();
+            String phone = claims.get("phone").toString();
+
+            loginResponse.setUserName(StringUtils.strip(username, "\""));
+            loginResponse.setUserPhone(StringUtils.strip(phone, "\""));
             return loginResponse;
         }catch (Exception e){
             return  null;
