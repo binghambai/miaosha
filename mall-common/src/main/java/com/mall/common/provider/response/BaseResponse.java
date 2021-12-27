@@ -22,7 +22,7 @@ public class BaseResponse<T> implements Serializable {
     }
 
     public static BaseResponse SUCCESSFUL() {
-        return new BaseResponse(ErrorCode.SUCCESS);
+        return new BaseResponse(ErrorCode.SUCCESS, "操作成功", null );
     }
 
     public static BaseResponse FAILED() {
@@ -31,5 +31,13 @@ public class BaseResponse<T> implements Serializable {
 
     public static <T> BaseResponse<T> success(T context) {
         return new BaseResponse<>(ErrorCode.SUCCESS, null, context);
+    }
+
+    public static BaseResponse error(String code, String msg) {
+        return new BaseResponse<>(code, msg, null);
+    }
+
+    public static BaseResponse info(String code, String msg) {
+        return new BaseResponse<>(code, msg, null);
     }
  }
