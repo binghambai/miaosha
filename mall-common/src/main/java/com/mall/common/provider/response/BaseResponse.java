@@ -22,15 +22,15 @@ public class BaseResponse<T> implements Serializable {
     }
 
     public static BaseResponse SUCCESSFUL() {
-        return new BaseResponse(ErrorCode.SUCCESS, "操作成功", null );
+        return new BaseResponse(ErrorCode.SUCCESS.getCode(), ErrorCode.SUCCESS.getMsg(), null );
     }
 
     public static BaseResponse FAILED() {
-        return new BaseResponse(ErrorCode.FAILED);
+        return new BaseResponse(ErrorCode.FAILED.getCode());
     }
 
     public static <T> BaseResponse<T> success(T context) {
-        return new BaseResponse<>(ErrorCode.SUCCESS, null, context);
+        return new BaseResponse<>(ErrorCode.SUCCESS.getCode(), null, context);
     }
 
     public static BaseResponse error(String code, String msg) {

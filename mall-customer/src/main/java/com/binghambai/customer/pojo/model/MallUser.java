@@ -13,9 +13,6 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "mall_user")
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class MallUser implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

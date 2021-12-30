@@ -27,6 +27,7 @@ public class GoodsDetailService {
             goodsDetailVO.setName(good.getName());
             goodsDetailVO.setImgUrl(good.getPic());
             goodsDetailVO.setPrice(good.getPrice());
+            goodsDetailVO.setGoodsId(good.getId());
             goodsDetailVOs.add(goodsDetailVO);
         }
         GoodsListResponse goodsListResponse = new GoodsListResponse();

@@ -31,13 +31,13 @@ public class CustomerInfoService {
 
         boolean exists = customerRepository.existsByUserPhone(customer.getCustomerPhone());
         if (exists) {
-            return BaseResponse.info(ErrorCode.SUCCESS, "已经存在");
+            return BaseResponse.info(ErrorCode.SUCCESS.getCode(), "已经存在");
         }
         try {
             customerRepository.save(mallUser);
         } catch (Exception e) {
             log.error("保存数据失败");
-            return BaseResponse.error(ErrorCode.FAILED, "保存数据失败");
+            return BaseResponse.error(ErrorCode.EXC_DATABASE_ERROR.getCode(), ErrorCode.EXC_DATABASE_ERROR.getMsg());
         }
         return BaseResponse.SUCCESSFUL();
     }
@@ -47,13 +47,13 @@ public class CustomerInfoService {
             MallUser user = customerRepository.findByUserNameAndUserPassword(customerLogin.getUserName(), customerLogin.getPassword());
             if (Objects.isNull(user)) {
                 log.error("账户名或密码错误");
-                return BaseResponse.info(ErrorCode.LOGIN_FAILED, "账户名或密码错误");
+                return BaseResponse.info(ErrorCode.LOGIN_FAILED.getCode(), "账户名或密码错误");
             }
 
             return BaseResponse.success(new LoginResponse(user.getUserName(), user.getUserPic(),user.getUserPhone()));
         } catch (Exception e) {
             log.error("数据库操作失败");
-            return BaseResponse.info(ErrorCode.EXC_DATABASE_ERROR, "数据库操作失败");
+            return BaseResponse.info(ErrorCode.EXC_DATABASE_ERROR.getCode(), ErrorCode.EXC_DATABASE_ERROR.getMsg());
         }
     }
 
@@ -62,7 +62,7 @@ public class CustomerInfoService {
             return BaseResponse.success(customerRepository.findByUserPhone(phone));
         } catch (Exception e) {
             log.error("数据库操作失败");
-            return BaseResponse.error(ErrorCode.EXC_DATABASE_ERROR, "数据库操作失败");
+            return BaseResponse.error(ErrorCode.EXC_DATABASE_ERROR.getCode(), ErrorCode.EXC_DATABASE_ERROR.getMsg());
         }
     }
 }

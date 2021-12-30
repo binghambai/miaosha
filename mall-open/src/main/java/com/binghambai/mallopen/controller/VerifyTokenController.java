@@ -28,7 +28,7 @@ public class VerifyTokenController {
     public BaseResponse verifyToken(@RequestParam("token") String token) {
         LoginResponse user = JwtUtils.getUser(token);
         if(Objects.isNull(user)){
-            return BaseResponse.error(ErrorCode.TOKEN_EXPIRED, "token过期");
+            return BaseResponse.error(ErrorCode.TOKEN_EXPIRED.getCode(), ErrorCode.TOKEN_EXPIRED.getMsg());
         }
         //获取下user pic信息
         BaseResponse<UserInfoVo> userInfoVo = customerInfoProvider.getUserInfoByPhone(user.getUserPhone());

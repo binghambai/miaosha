@@ -8,6 +8,8 @@ import java.math.BigDecimal;
 @Data
 public class GoodsDetailVO implements Serializable {
 
+    private Long goodsId;
+
     private String name;
 
     private String desc;

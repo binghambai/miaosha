@@ -10,14 +10,14 @@ public class VerifyBaseResponse {
 
     public static ErrorVerifyBaseResponse verify(BaseResponse response) {
         if (Objects.isNull(response)) {
-            return new ErrorVerifyBaseResponse(ErrorCode.FAILED, "操作失败");
+            return new ErrorVerifyBaseResponse(ErrorCode.FAILED.getCode(), ErrorCode.FAILED.getMsg());
         }
         if (!ErrorCode.SUCCESS.equals(response.getCode())) {
             return new ErrorVerifyBaseResponse(response.getCode(), response.getMsg());
         }
         if(Objects.isNull(response.getContext())) {
-            return new ErrorVerifyBaseResponse(ErrorCode.FAILED, "执行内容为空");
+            return new ErrorVerifyBaseResponse(ErrorCode.FAILED.getCode(), ErrorCode.FAILED.getMsg());
         }
-        return new ErrorVerifyBaseResponse(ErrorCode.SUCCESS, "操作成功");
+        return new ErrorVerifyBaseResponse(ErrorCode.SUCCESS.getCode(), ErrorCode.SUCCESS.getMsg());
     }
 }

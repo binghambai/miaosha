@@ -21,6 +21,7 @@
         <module>mall-common</module>
         <module>mall-open</module>
         <module>mall-customer</module>
+        <module>mall-order</module>
     </modules>
 
     <properties>

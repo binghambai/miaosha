@@ -12,6 +12,8 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class GoodsDetailVO implements Serializable {
 
+    private Long goodsId;
+
     private String name;
 
     private String desc;
