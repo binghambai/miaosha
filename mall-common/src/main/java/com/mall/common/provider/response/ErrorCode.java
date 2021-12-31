@@ -10,7 +10,9 @@ public enum ErrorCode {
     NO_TOKEN("K-000003", "缺少token"),
     TOKEN_EXPIRED("K-000004", "token失效"),
     EXC_DATABASE_ERROR("K-000006", "数据库操作失败"),
-    ERROR_CREATE_ORDER("K-000005", "生成订单出错");
+    ERROR_CREATE_ORDER("K-000005", "生成订单出错"),
+    NO_STOCK("K-000010", "库存不足"),
+    ORDER_STATUS_ERROR("K-000011", "订单状态异常");
 
     private String code;
 

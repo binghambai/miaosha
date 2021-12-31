@@ -1,6 +1,13 @@
 package com.binghambai.mallorder.service;
 
+import com.alibaba.fastjson.JSONObject;
+import com.binghambai.mallorder.mq.delayedOrder.DelayedOrderProducer;
 import com.binghambai.mallorder.pojo.Goods;
+import com.binghambai.mallorder.pojo.GoodsStock;
+import com.binghambai.mallorder.pojo.request.ReduceStockRequest;
+import com.binghambai.mallorder.pojo.request.SubmitOrderRequest;
+import com.binghambai.mallorder.pojo.response.SubmitOrderResponse;
+import com.binghambai.mallorder.provider.GoodsInfoProvider;
 import com.mall.common.provider.pojo.enums.LogisticsStatusEnum;
 import com.mall.common.provider.pojo.enums.OrderActiveStatusEnum;
 import com.mall.common.provider.pojo.enums.OrderStatusEnum;
@@ -29,10 +36,15 @@ import java.util.TimeZone;
 public class OrderService {
 
     @Autowired
+    GoodsInfoProvider goodsInfoProvider;
+
+    @Autowired
     private OrderRepository orderRepository;
 
-    public BaseResponse createOrder(CreateOrderRequest createOrderRequest) {
+    @Autowired
+    private DelayedOrderProducer delayedOrderProducer;
 
+    public BaseResponse createOrder(CreateOrderRequest createOrderRequest) {
         //校验交易金额
         BigDecimal sum = BigDecimal.ZERO;
         List<String> goodsIdList = new ArrayList<>();
@@ -96,12 +108,31 @@ public class OrderService {
         Date date = new Date(System.currentTimeMillis());
         return "O" + random + date.getTime();
     }
-    public static void main(String[] args) {
-//        String random = RandomStringUtils.randomNumeric(4);
-        Date date = new Date(System.currentTimeMillis());
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        sdf.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
-        String format = sdf.format(date);
-        System.out.println(format);
+
+    public BaseResponse submitOrder(SubmitOrderRequest submitOrderRequest) {
+        if (submitOrderRequest.getGoodsList().isEmpty()) {
+            log.error("商品列表为空");
+            return BaseResponse.error(ErrorCode.FAILED.getCode(), ErrorCode.FAILED.getMsg());
+        }
+        MallOrder order = orderRepository.findByOrderId(submitOrderRequest.getOrderId());
+        if (!OrderStatusEnum.NO_PAYMENT.getIndex().equals(order.getOrderStatus())) {
+            return BaseResponse.error(ErrorCode.ORDER_STATUS_ERROR.getCode(), ErrorCode.ORDER_STATUS_ERROR.getMsg());
+        }
+        List<GoodsStock> goodsStockList = new ArrayList<>();
+        for (Goods goods : submitOrderRequest.getGoodsList()) {
+            goodsStockList.add(new GoodsStock(goods.getGoodsId(), goods.getTotal()));
+        }
+        try {
+            orderRepository.saveConsigneeInfo(submitOrderRequest);
+            //减少库存
+            goodsInfoProvider.reduceStock(new ReduceStockRequest(goodsStockList));
+            //发送订单开始计时消息
+            String msg = JSONObject.toJSONString(submitOrderRequest);
+            delayedOrderProducer.sendMsg(msg, 3);
+        } catch (Exception e) {
+            log.error(e.toString());
+            throw new SbcException(ErrorCode.FAILED.getMsg());
+        }
+        return BaseResponse.success(new SubmitOrderResponse(1));
     }
 }

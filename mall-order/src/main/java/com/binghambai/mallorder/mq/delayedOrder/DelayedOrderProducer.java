@@ -1,8 +1,6 @@
-package com.binghambai.mallorder.controller;
+package com.binghambai.mallorder.mq.delayedOrder;
 
-import com.binghambai.mallorder.mq.DelayedRabbitMQConfig;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.jni.Time;
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageDeliveryMode;
@@ -17,19 +15,21 @@ import java.util.Date;
 
 @Component
 @Slf4j
-public class Producer {
+public class DelayedOrderProducer {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    public void sendMsg(String msg) {
+    private static final Integer ONE_MINUTE = 1000;
+
+    public void sendMsg(Object msg, Integer minute) {
         rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
-        rabbitTemplate.setExchange(DelayedRabbitMQConfig.DELAYED_EXCHANGE_NAME);
-        rabbitTemplate.setRoutingKey(DelayedRabbitMQConfig.DELAY_ROUTING_KEY);
-        rabbitTemplate.convertAndSend((Object) msg, new MessagePostProcessor() {
+        rabbitTemplate.setExchange(DelayedOrderRabbitMQConfig.DELAYED_EXCHANGE_NAME);
+        rabbitTemplate.setRoutingKey(DelayedOrderRabbitMQConfig.DELAY_ROUTING_KEY);
+        rabbitTemplate.convertAndSend(msg, new MessagePostProcessor() {
             @Override
             public Message postProcessMessage(Message message) throws AmqpException {
                 MessageProperties messageProperties = message.getMessageProperties();
-                messageProperties.setDelay(6000);
+                messageProperties.setDelay(ONE_MINUTE * minute);
                 messageProperties.setDeliveryMode(MessageDeliveryMode.PERSISTENT);
                 return message;
             }

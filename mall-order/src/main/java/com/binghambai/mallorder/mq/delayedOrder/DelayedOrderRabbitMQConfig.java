@@ -1,4 +1,4 @@
-package com.binghambai.mallorder.mq;
+package com.binghambai.mallorder.mq.delayedOrder;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-public class DelayedRabbitMQConfig {
+public class DelayedOrderRabbitMQConfig {
 
     public static final String DELAYED_QUEUE_NAME = "delay.queue.order.delay.queue";
 

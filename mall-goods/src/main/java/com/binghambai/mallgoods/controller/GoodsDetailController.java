@@ -2,7 +2,10 @@ package com.binghambai.mallgoods.controller;
 
 
 import com.binghambai.mallgoods.provider.GoodsDetailProvider;
+import com.binghambai.mallgoods.request.AddGoodsStock;
+import com.binghambai.mallgoods.request.AddStockRequest;
 import com.binghambai.mallgoods.request.GoodsListRequest;
+import com.binghambai.mallgoods.request.ReduceStockRequest;
 import com.binghambai.mallgoods.response.GoodsListResponse;
 import com.binghambai.mallgoods.service.GoodsDetailService;
 import com.mall.common.provider.response.BaseResponse;
@@ -21,7 +24,12 @@ public class GoodsDetailController implements GoodsDetailProvider {
     }
 
     @Override
-    public String getTest() {
-        return "test";
+    public BaseResponse reduceStock(ReduceStockRequest reduceStockRequest) {
+        return goodsDetailService.reduceStock(reduceStockRequest);
+    }
+
+    @Override
+    public BaseResponse addStock(AddStockRequest addStockRequest) {
+        return goodsDetailService.addGoodsStock(addStockRequest);
     }
 }
