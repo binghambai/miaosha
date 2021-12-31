@@ -12,6 +12,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class LoginResponse implements Serializable {
 
+    private String userId;
+
     private String userName;
 
     private String userPic;

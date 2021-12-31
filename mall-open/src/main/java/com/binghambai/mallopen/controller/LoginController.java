@@ -4,8 +4,10 @@ import com.binghambai.mallopen.jwt.JwtUtils;
 import com.binghambai.mallopen.provider.CustomerInfoProvider;
 import com.binghambai.mallopen.request.Login;
 import com.binghambai.mallopen.response.LoginResponse;
+import com.mall.common.provider.pojo.ErrorVerifyBaseResponse;
 import com.mall.common.provider.response.BaseResponse;
 import com.mall.common.provider.response.ErrorCode;
+import com.mall.common.provider.utils.VerifyBaseResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,14 +27,10 @@ public class LoginController {
     @PostMapping("/login")
     public BaseResponse login(@RequestBody Login login) {
         BaseResponse<LoginResponse> response = customerInfoProvider.login(login);
-        if (Objects.isNull(response)) {
+        ErrorVerifyBaseResponse verify = VerifyBaseResponse.verify(response);
+        if (!ErrorCode.SUCCESS.getCode().equals(verify.getCode())) {
             return BaseResponse.FAILED();
         }
-        if (!ErrorCode.SUCCESS.equals(response.getCode())) {
-            return BaseResponse.info(response.getCode(), response.getMsg());
-        }
-        LoginResponse user = response.getContext();
-        user.setToken(JwtUtils.createToken(user.getUserName(), user.getUserPhone()));
-        return response;
+        return BaseResponse.success(response.getContext());
     }
 }

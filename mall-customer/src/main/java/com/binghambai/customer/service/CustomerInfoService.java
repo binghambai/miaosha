@@ -49,8 +49,12 @@ public class CustomerInfoService {
                 log.error("账户名或密码错误");
                 return BaseResponse.info(ErrorCode.LOGIN_FAILED.getCode(), "账户名或密码错误");
             }
-
-            return BaseResponse.success(new LoginResponse(user.getUserName(), user.getUserPic(),user.getUserPhone()));
+            LoginResponse loginResponse = new LoginResponse();
+            loginResponse.setUserName(user.getUserName());
+            loginResponse.setUserPhone(user.getUserPhone());
+            loginResponse.setUserPic(user.getUserPic());
+            loginResponse.setUserId(user.getUserId());
+            return BaseResponse.success(loginResponse);
         } catch (Exception e) {
             log.error("数据库操作失败");
             return BaseResponse.info(ErrorCode.EXC_DATABASE_ERROR.getCode(), ErrorCode.EXC_DATABASE_ERROR.getMsg());
