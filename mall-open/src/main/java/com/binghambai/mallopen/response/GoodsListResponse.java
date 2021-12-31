@@ -1,5 +1,6 @@
 package com.binghambai.mallopen.response;
 
+import com.binghambai.mallopen.response.vo.GoodsDetailVO;
 import lombok.Data;
 
 import java.io.Serializable;

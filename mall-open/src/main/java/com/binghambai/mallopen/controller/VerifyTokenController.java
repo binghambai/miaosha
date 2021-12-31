@@ -2,9 +2,8 @@ package com.binghambai.mallopen.controller;
 
 import com.binghambai.mallopen.jwt.JwtUtils;
 import com.binghambai.mallopen.provider.CustomerInfoProvider;
-import com.binghambai.mallopen.request.Login;
 import com.binghambai.mallopen.response.LoginResponse;
-import com.binghambai.mallopen.response.UserInfoVo;
+import com.binghambai.mallopen.response.vo.UserInfoVo;
 import com.mall.common.provider.pojo.ErrorVerifyBaseResponse;
 import com.mall.common.provider.response.BaseResponse;
 import com.mall.common.provider.response.ErrorCode;

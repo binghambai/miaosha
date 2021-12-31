@@ -1,11 +1,15 @@
 package com.binghambai.customer.service;
 
 import com.binghambai.customer.pojo.model.MallUser;
+import com.binghambai.customer.pojo.model.MallUserCart;
 import com.binghambai.customer.pojo.request.Customer;
 import com.binghambai.customer.pojo.request.CustomerLogin;
+import com.binghambai.customer.pojo.request.GetCartListRequest;
+import com.binghambai.customer.pojo.response.GetCartListResponse;
 import com.binghambai.customer.pojo.response.LoginResponse;
+import com.binghambai.customer.pojo.response.vo.GoodsCartItemVO;
 import com.binghambai.customer.repository.CustomerRepository;
-import com.mall.common.provider.Exception.SbcException;
+import com.binghambai.customer.repository.UserCartRepository;
 import com.mall.common.provider.response.BaseResponse;
 import com.mall.common.provider.response.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Service

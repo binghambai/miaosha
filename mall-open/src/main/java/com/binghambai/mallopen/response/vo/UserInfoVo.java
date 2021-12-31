@@ -1,4 +1,4 @@
-package com.binghambai.mallopen.response;
+package com.binghambai.mallopen.response.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
