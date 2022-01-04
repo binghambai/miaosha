@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.time.Instant;
 
 @Entity
 @Table(name = "mall_user_cart")
@@ -43,5 +45,8 @@ public class MallUserCart {
 
     @Column(name = "user_id")
     private String userId;
+
+    @Column(name = "add_time")
+    private Timestamp addTime;
 
 }

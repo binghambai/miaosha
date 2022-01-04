@@ -1,11 +1,11 @@
 package com.binghambai.mallopen.provider;
 
+import com.binghambai.mallopen.request.AddToCartRequest;
 import com.binghambai.mallopen.request.Customer;
 import com.binghambai.mallopen.request.GetCartListRequest;
 import com.binghambai.mallopen.request.Login;
 import com.binghambai.mallopen.response.GetCartListResponse;
 import com.binghambai.mallopen.response.LoginResponse;
-import com.binghambai.mallopen.response.vo.GoodsCartItemVO;
 import com.binghambai.mallopen.response.vo.UserInfoVo;
 import com.mall.common.provider.response.BaseResponse;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -24,7 +24,4 @@ public interface CustomerInfoProvider {
 
     @RequestMapping("/customer/get-user-info")
     BaseResponse<UserInfoVo> getUserInfoByPhone(@RequestParam("phone") String phone);
-
-    @RequestMapping("/customer/get/cart-list")
-    BaseResponse<GetCartListResponse> getCartList(@RequestBody GetCartListRequest getCartListRequest);
 }

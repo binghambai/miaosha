@@ -3,7 +3,6 @@ package com.binghambai.customer.controller;
 import com.binghambai.customer.pojo.request.AddToCartRequest;
 import com.binghambai.customer.pojo.request.GetCartListRequest;
 import com.binghambai.customer.provider.GetCartListProvider;
-import com.binghambai.customer.service.CustomerInfoService;
 import com.binghambai.customer.service.UserCartService;
 import com.mall.common.provider.response.BaseResponse;
 import org.springframework.beans.factory.annotation.Autowired;

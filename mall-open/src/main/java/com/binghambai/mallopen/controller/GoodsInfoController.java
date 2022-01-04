@@ -14,21 +14,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/goods/")
-public class GetGoodsController {
+public class GoodsInfoController {
 
     @Autowired
     private GoodsDetailProvider goodsDetailProvider;
 
-    @Autowired
-    CustomerInfoProvider customerInfoProvider;
-
     @PostMapping("/getAll")
     public BaseResponse<GoodsListResponse> getGoods(@RequestBody GoodsListRequest goodsListRequest) {
         return goodsDetailProvider.getGoodsListAll(goodsListRequest);
-    }
-
-    @PostMapping("/getCartList")
-    public BaseResponse<GetCartListResponse> getCartList(@RequestBody GetCartListRequest getCartListRequest) {
-        return customerInfoProvider.getCartList(getCartListRequest);
     }
 }
