@@ -29,16 +29,6 @@ public class VerifyTokenController {
         if(Objects.isNull(user)){
             return BaseResponse.error(ErrorCode.TOKEN_EXPIRED.getCode(), ErrorCode.TOKEN_EXPIRED.getMsg());
         }
-        //获取下user pic信息
-        BaseResponse<UserInfoVo> userInfoVo = customerInfoProvider.getUserInfoByPhone(user.getUserPhone());
-        ErrorVerifyBaseResponse verify = VerifyBaseResponse.verify(userInfoVo);
-        if(!ErrorCode.SUCCESS.equals(verify.getCode())) {
-            if ("内容为空".equals(verify.getMsg())) {
-                return BaseResponse.success(user);
-            }
-            return BaseResponse.error(verify.getCode(), verify.getMsg());
-        }
-        user.setUserPic(userInfoVo.getContext().getUserPic());
         return BaseResponse.success(user);
     }
 }

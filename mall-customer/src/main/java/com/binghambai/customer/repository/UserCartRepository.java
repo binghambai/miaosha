@@ -12,5 +12,6 @@ import java.util.List;
 public interface UserCartRepository extends JpaRepository<MallUserCart, Long>,
         JpaSpecificationExecutor<MallUserCart> {
 
+
     List<MallUserCart> findByUserId(String userId);
 }

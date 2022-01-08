@@ -14,4 +14,5 @@ public interface CustomerRepository extends JpaRepository<MallUser, Long> , JpaS
     MallUser findByUserNameAndUserPassword(String userName, String userPassword);
 
     MallUser findByUserPhone(String phone);
+
 }

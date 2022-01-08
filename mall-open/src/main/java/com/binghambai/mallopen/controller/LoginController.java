@@ -31,6 +31,9 @@ public class LoginController {
         if (!ErrorCode.SUCCESS.getCode().equals(verify.getCode())) {
             return BaseResponse.FAILED();
         }
-        return BaseResponse.success(response.getContext());
+        LoginResponse context = response.getContext();
+        String token = JwtUtils.createToken(context);
+        context.setToken(token);
+        return BaseResponse.success(context);
     }
 }

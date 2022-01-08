@@ -19,7 +19,7 @@ public class JwtUtils {
     //token秘钥
     private static final String TOKEN_SECRET = "ZCfasfhuaUUHufguGuwu2020BQWE";
 
-    public static String createToken (String username,String phone){
+    public static String createToken(LoginResponse loginResponse){
 
         String token = "";
         try {
@@ -34,8 +34,11 @@ public class JwtUtils {
             //携带username，password信息，生成签名
             token = JWT.create()
                     .withHeader(header)
-                    .withClaim("username",username)
-                    .withClaim("phone", phone).withExpiresAt(date)
+                    .withClaim("username",loginResponse.getUserName())
+                    .withClaim("phone", loginResponse.getUserPhone())
+                    .withClaim("userId", loginResponse.getUserId())
+                    .withClaim("userPic", loginResponse.getUserPic())
+                    .withExpiresAt(date)
                     .sign(algorithm);
         }catch (Exception e){
             e.printStackTrace();
@@ -69,9 +72,12 @@ public class JwtUtils {
             LoginResponse loginResponse = new LoginResponse();
             String username = claims.get("username").toString();
             String phone = claims.get("phone").toString();
-
-            loginResponse.setUserName(StringUtils.strip(username, "\""));
-            loginResponse.setUserPhone(StringUtils.strip(phone, "\""));
+            String userId = claims.get("userId").toString();
+            String userPic = claims.get("userPic").toString();
+            loginResponse.setUserName(clearStrip(username));
+            loginResponse.setUserPhone(clearStrip(phone));
+            loginResponse.setUserPic(clearStrip(userPic));
+            loginResponse.setUserId(clearStrip(userId));
             return loginResponse;
         }catch (Exception e){
             return  null;
@@ -83,5 +89,9 @@ public class JwtUtils {
         JWTVerifier verifier = JWT.require(algorithm).build();
         DecodedJWT jwt = verifier.verify(token);
         return jwt.getClaims();
+    }
+
+    public static String clearStrip(String str) {
+        return StringUtils.strip(str, "\"");
     }
 }
