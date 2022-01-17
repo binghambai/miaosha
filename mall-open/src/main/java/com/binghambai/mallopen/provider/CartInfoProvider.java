@@ -18,4 +18,7 @@ public interface CartInfoProvider {
     @RequestMapping("/customer/add-cart")
     BaseResponse addCart(@RequestBody AddToCartRequest addToCartRequest);
 
+
+    @RequestMapping("/customer/batch")
+    void addUserBatch();
 }
